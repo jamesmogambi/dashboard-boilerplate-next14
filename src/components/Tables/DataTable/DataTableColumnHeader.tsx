@@ -23,7 +23,6 @@ interface DataTableColumnHeaderProps<TData, TValue>
   column: Column<TData, TValue>;
   title: string;
 }
-
 export function DataTableColumnHeader<TData, TValue>({
   column,
   title,
@@ -34,7 +33,7 @@ export function DataTableColumnHeader<TData, TValue>({
   }
 
   return (
-    <div className={cn("flex items-center space-x-2", className)}>
+    <div className={cn("flex items-center space-x-2 ", className)}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
@@ -42,13 +41,41 @@ export function DataTableColumnHeader<TData, TValue>({
             size="sm"
             className="data-[state=open]:bg-accent -ml-3 h-8"
           >
-            <span className="text-lg dark:text-white">{title}</span>
+            <span className={cn("text-lg")}>{title}</span>
             {column.getIsSorted() === "desc" ? (
               <ArrowDownIcon className="ml-2 h-4 w-4 dark:text-white " />
             ) : column.getIsSorted() === "asc" ? (
               <ArrowUpIcon className="ml-2 h-4 w-4 dark:text-white" />
             ) : (
-              <ChevronsUpDown className="ml-2 h-4 w-4 dark:text-white" />
+              <div className="ml-2 inline-flex flex-col space-y-[2px]">
+                <span className="inline-block">
+                  <svg
+                    className="fill-current"
+                    width="10"
+                    height="5"
+                    viewBox="0 0 10 5"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M5 0L0 5H10L5 0Z" fill=""></path>
+                  </svg>
+                </span>
+                <span className="inline-block">
+                  <svg
+                    className="fill-current"
+                    width="10"
+                    height="5"
+                    viewBox="0 0 10 5"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
+                      fill=""
+                    ></path>
+                  </svg>
+                </span>
+              </div>
             )}
           </Button>
         </DropdownMenuTrigger>

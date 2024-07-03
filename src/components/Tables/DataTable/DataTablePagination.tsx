@@ -17,10 +17,12 @@ import { Table } from "@tanstack/react-table";
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
+  className?: string;
 }
 
 export function DataTablePagination<TData>({
   table,
+  className,
 }: DataTablePaginationProps<TData>) {
   return (
     <div className="flex items-center justify-end pb-8 pt-5">

@@ -69,7 +69,24 @@ function DataTable<TData, TValue>({
   return (
     <div className="max-w-full overflow-x-auto">
       {/* add input and toggle columns */}
-      <div className="mb-5 flex w-full flex-col items-center justify-between gap-2 xl:flex-row">
+      <div className="mb-5 flex w-full flex-col items-center justify-between gap-2 px-6.5 py-1 xl:flex-row">
+        <div className="w-3/4 md:w-1/2 xl:w-1/5">
+          <input
+            type="text"
+            placeholder={searchDetails.placeholder}
+            value={
+              (table
+                .getColumn(searchDetails.searchField)
+                ?.getFilterValue() as string) ?? ""
+            }
+            onChange={(event) =>
+              table
+                .getColumn(searchDetails.searchField)
+                ?.setFilterValue(event.target.value)
+            }
+            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+          />
+        </div>
         <div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -94,7 +111,7 @@ function DataTable<TData, TValue>({
                   return (
                     <DropdownMenuCheckboxItem
                       key={column.id}
-                      className="cursor-pointer capitalize text-black hover:bg-neutral-100 dark:text-white dark:hover:bg-meta-4  "
+                      className="cursor-pointer font-medium capitalize text-black hover:bg-neutral-100 dark:text-white dark:hover:bg-meta-4  "
                       checked={column.getIsVisible()}
                       onCheckedChange={(value) =>
                         column.toggleVisibility(!!value)
@@ -107,34 +124,17 @@ function DataTable<TData, TValue>({
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <div className="w-3/4 md:w-1/2 xl:w-1/5">
-          <input
-            type="text"
-            placeholder={searchDetails.placeholder}
-            value={
-              (table
-                .getColumn(searchDetails.searchField)
-                ?.getFilterValue() as string) ?? ""
-            }
-            onChange={(event) =>
-              table
-                .getColumn(searchDetails.searchField)
-                ?.setFilterValue(event.target.value)
-            }
-            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-          />
-        </div>
       </div>
       <Table className="w-full table-auto">
         <TableHeader className="border-none ">
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow
               key={headerGroup.id}
-              className="border-none bg-gray-2 text-left dark:bg-meta-4"
+              className="border-y border-stroke text-left dark:border-strokedark "
             >
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead className="border-none " key={header.id}>
+                  <TableHead className="border-none pb-6 pt-8" key={header.id}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -157,7 +157,7 @@ function DataTable<TData, TValue>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
-                      className=" border-b border-[#eee] py-0 dark:border-strokedark "
+                      className=" border-b border-[#eee] py-2 text-lg font-medium dark:border-strokedark "
                       key={cell.id}
                     >
                       {flexRender(
@@ -181,7 +181,7 @@ function DataTable<TData, TValue>({
           </TableBody>
         </>
       </Table>
-      <DataTablePagination table={table} />
+      <DataTablePagination table={table} className="px-6.5" />
     </div>
   );
 }
